@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AndroidTutorialTemplate"
-include(":app")
- 
+rootProject.name = "AndroidDragAndDropShare"
+include(":contentshareapp")
+include(":contentreceiveapp")
