@@ -12,13 +12,21 @@ class ReceiveContentViewModel : ViewModel() {
     private val _state = MutableStateFlow(ReceiveContentState())
     val state: StateFlow<ReceiveContentState> = _state.asStateFlow()
 
-    fun setDroppedContent(clipData: ClipData) {
+    fun updateTextByClipData(clipData: ClipData?) {
 
-        val pastedText: String = (0 until clipData.itemCount)
+        if (clipData == null) return
+
+        val sharedText: String = (0 until clipData.itemCount)
             .map { index -> clipData.getItemAt(index).text }
-            .filter { pastedText -> pastedText.isNotBlank() }
+            .filter { text -> text.isNotBlank() }
             .joinToString(separator = "\n")
 
-        _state.update { current -> current.copy(text = pastedText) }
+        if (sharedText.isNotBlank()) {
+            _state.update { current -> current.copy(text = sharedText) }
+        }
+    }
+
+    fun updateDragAndDropHint(shouldShowHint: Boolean) {
+        _state.update { current -> current.copy(showDragAndDropHint = shouldShowHint) }
     }
 }
